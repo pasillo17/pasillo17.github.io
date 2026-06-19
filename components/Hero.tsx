@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { ChevronDown } from 'lucide-react';
+import React, { useState, useEffect } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { ChevronDown } from "lucide-react";
 
 const Hero: React.FC = () => {
   const [hasClicked, setHasClicked] = useState(false);
@@ -12,54 +12,56 @@ const Hero: React.FC = () => {
         setHasClicked(false);
       }
     };
-    
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
   const handleButtonClick = () => {
     setHasClicked(true);
     // Esperamos un momento para que lean el nuevo texto y luego bajamos a la sección "Sobre mí"
     setTimeout(() => {
-      const aboutSection = document.getElementById('about');
+      const aboutSection = document.getElementById("about");
       if (aboutSection) {
-        aboutSection.scrollIntoView({ behavior: 'smooth' });
+        aboutSection.scrollIntoView({ behavior: "smooth" });
       }
     }, 600);
   };
 
   return (
-    <section className="relative min-h-screen flex items-center justify-center overflow-hidden pt-20">
+    <section className="relative min-h-screen flex items-center justify-center overflow-hidden pt-20 bg-[#030509]">
       {/* Backgrounds */}
-      <div className="absolute inset-0 bg-brand-dark"></div>
-      <div className="absolute inset-0 bg-gradient-to-b from-[#1e1b4b] to-brand-dark opacity-80"></div>
+      <div className="absolute inset-0 bg-gradient-to-b from-[#0a0f24] to-[#030509] opacity-80"></div>
       <div className="absolute inset-0 stars"></div>
-      
-      {/* Glow Center */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-brand-blue rounded-full blur-[120px] opacity-10 pointer-events-none"></div>
+
+      {/* Glow Centers */}
+      <div className="absolute top-1/4 left-1/4 w-[600px] h-[600px] bg-brand-blue/20 rounded-full blur-[150px] pointer-events-none"></div>
+      <div className="absolute bottom-1/4 right-1/4 w-[500px] h-[500px] bg-blue-600/20 rounded-full blur-[150px] pointer-events-none"></div>
 
       <div className="max-w-5xl mx-auto px-6 text-center relative z-10">
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
+          initial={{ opacity: 0, scale: 0.9 }}
+          animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.8 }}
-          className="inline-flex items-center gap-1.5 md:gap-2 mb-6 md:mb-8 px-3 py-1 md:px-4 md:py-1.5 rounded-full border border-brand-blue/30 bg-brand-blue/10 text-brand-blue text-[10px] md:text-xs font-bold uppercase tracking-widest md:tracking-[0.2em] backdrop-blur-sm"
+          className="inline-flex items-center gap-2 mb-8 px-4 py-1.5 rounded-full border border-white/10 bg-white/5 backdrop-blur-md"
         >
-          <span className="w-1.5 h-1.5 md:w-2 md:h-2 rounded-full bg-brand-blue animate-pulse"></span>
-          Grabación · Mezcla · Mastering
+          <span className="w-2 h-2 rounded-full bg-brand-blue animate-pulse"></span>
+          <span className="text-xs font-bold uppercase tracking-[0.2em] text-slate-300">
+            Grabación · Mezcla · Mastering
+          </span>
         </motion.div>
 
         <motion.h1
-          initial={{ opacity: 0, scale: 0.9 }}
-          animate={{ opacity: 1, scale: 1 }}
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.2 }}
-          className="text-6xl md:text-8xl font-display font-bold leading-none mb-8 tracking-tight"
+          className="text-6xl md:text-8xl font-display font-black leading-none mb-8 tracking-tighter uppercase"
         >
-          <span className="text-white block">
+          <span className="text-white block drop-shadow-2xl">
             <span className="md:hidden">GRABÁ. SONÁ.</span>
             <span className="hidden md:inline">GRABÁ. CREÁ.</span>
           </span>
-          <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-blue to-violet-500 text-glow block mt-2 sm:mt-0">
+          <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-blue via-blue-400 to-cyan-400 block mt-2 sm:mt-0 drop-shadow-[0_0_30px_rgba(0,123,255,0.3)]">
             <span className="md:hidden">PROFESIONAL.</span>
             <span className="hidden md:inline">SONÁ PROFESIONAL.</span>
           </span>
@@ -69,7 +71,7 @@ const Hero: React.FC = () => {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.8, delay: 0.4 }}
-          className="text-xl md:text-2xl text-slate-400 max-w-2xl mx-auto mb-12 font-light"
+          className="text-xl md:text-2xl text-slate-400 max-w-2xl mx-auto mb-12 font-medium tracking-wide"
         >
           Desde La Plata para el Mundo
         </motion.p>
@@ -80,9 +82,9 @@ const Hero: React.FC = () => {
           transition={{ duration: 0.8, delay: 0.6 }}
           className="flex justify-center"
         >
-          <button 
+          <button
             onClick={handleButtonClick}
-            className="px-10 py-4 bg-brand-blue text-white rounded-full font-bold text-lg transition-all hover:scale-105 shadow-[0_0_25px_rgba(0,123,255,0.5)] hover:shadow-[0_0_45px_rgba(0,123,255,0.7)] min-w-[240px]"
+            className="px-10 py-5 bg-gradient-to-r from-brand-blue to-blue-600 text-white rounded-full font-bold tracking-widest text-lg transition-all hover:scale-105 shadow-[0_0_30px_rgba(0,123,255,0.4)] hover:shadow-[0_0_50px_rgba(0,123,255,0.6)] min-w-[240px] uppercase"
           >
             <AnimatePresence mode="wait">
               {!hasClicked ? (

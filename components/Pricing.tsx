@@ -1,13 +1,56 @@
-import React from 'react';
-import { motion } from 'framer-motion';
-import { CheckCircle2, Mic, AudioWaveform, Disc, Crown } from 'lucide-react';
-import { SERVICES } from '../constants';
+import React from "react";
+import { motion } from "framer-motion";
+import {
+  Check,
+  Mic,
+  AudioWaveform,
+  Disc,
+  Crown,
+  Sparkles,
+  Zap,
+  ArrowRight,
+} from "lucide-react";
+import { SERVICES } from "../constants";
 
 const icons = {
   mic: Mic,
   waveform: AudioWaveform,
   disc: Disc,
-  crown: Crown
+  crown: Crown,
+};
+
+// Colors mapping for modern look
+const cardStyles = {
+  basic: {
+    base: "border-slate-800 bg-slate-900/50",
+    hover:
+      "hover:border-blue-500/50 hover:shadow-[0_0_40px_rgba(59,130,246,0.15)]",
+    icon: "text-blue-400",
+    button: "bg-slate-800 text-white hover:bg-slate-700",
+    text: "text-slate-300",
+    glow: "from-blue-500/10 to-transparent",
+  },
+  standard: {
+    base: "border-brand-blue bg-[#0c1222]",
+    hover: "hover:shadow-[0_0_50px_rgba(0,123,255,0.3)]",
+    icon: "text-brand-blue",
+    button:
+      "bg-brand-blue text-white hover:bg-blue-600 shadow-[0_0_20px_rgba(0,123,255,0.5)]",
+    text: "text-white",
+    glow: "from-brand-blue/20 to-transparent",
+    badge: "bg-brand-blue text-white",
+  },
+  premium: {
+    base: "border-cyan-500/50 bg-slate-900/50",
+    hover:
+      "hover:border-cyan-500 hover:shadow-[0_0_40px_rgba(34,211,238,0.2)]",
+    icon: "text-cyan-400",
+    button:
+      "bg-cyan-600 text-white hover:bg-cyan-500 shadow-[0_0_20px_rgba(34,211,238,0.3)]",
+    text: "text-slate-200",
+    glow: "from-cyan-500/10 to-transparent",
+    badge: "bg-gradient-to-r from-blue-500 to-cyan-500 text-white",
+  },
 };
 
 const Pricing: React.FC = () => {
@@ -15,251 +58,255 @@ const Pricing: React.FC = () => {
   const deluxeService = SERVICES[3];
 
   return (
-    <section id="pricing" className="py-24 relative bg-brand-dark overflow-hidden">
-        {/* Decorative elements */}
-        <div className="absolute top-1/4 right-0 w-96 h-96 bg-brand-blue/5 rounded-full blur-[100px]"></div>
+    <section
+      id="pricing"
+      className="py-32 relative bg-[#030509] overflow-hidden"
+    >
+      {/* Background Orbs */}
+      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[500px] bg-brand-blue/10 rounded-full blur-[120px] pointer-events-none"></div>
+      <div className="absolute bottom-0 right-[-10%] w-[600px] h-[600px] bg-blue-600/10 rounded-full blur-[150px] pointer-events-none"></div>
 
-      <div className="max-w-7xl mx-auto px-6 text-center relative z-20">
-        <motion.h2 
-            initial={{ opacity: 0, y: -20 }}
+      <div className="max-w-7xl mx-auto px-6 relative z-20">
+        <div className="text-center mb-20">
+          <motion.div
+            initial={{ opacity: 0, scale: 0.9 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            viewport={{ once: true }}
+            className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-white/10 bg-white/5 backdrop-blur-md mb-6"
+          >
+            <Sparkles size={16} className="text-brand-blue" />
+            <span className="text-sm font-bold tracking-widest text-slate-300 uppercase">
+              Elegí tu plan
+            </span>
+          </motion.div>
+          <motion.h2
+            initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="text-4xl font-display font-bold text-white mb-4 uppercase tracking-widest"
-        >
-            SERVICIOS
-        </motion.h2>
-        <motion.p 
-             initial={{ opacity: 0 }}
-             whileInView={{ opacity: 1 }}
-             viewport={{ once: true }}
-             className="text-slate-500 mb-16"
-        >
-            Elegí el plan que mejor se adapte a tu proyecto.
-        </motion.p>
+            transition={{ delay: 0.1 }}
+            className="text-5xl md:text-6xl font-display font-black text-white uppercase tracking-tight"
+          >
+            Nuestros{" "}
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-blue to-cyan-400">
+              Servicios
+            </span>
+          </motion.h2>
+        </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16 lg:px-8">
           {standardServices.map((service, i) => {
-            const Icon = icons[service.icon];
+            const Icon = icons[service.icon as keyof typeof icons];
+            const styleId = service.id as keyof typeof cardStyles;
+            const style = cardStyles[styleId];
+
             const isRecommended = service.recommended;
-            const isUltra = service.id === 'premium';
-            
-            // Construimos el link de WhatsApp personalizado
-            const whatsappMessage = encodeURIComponent(`Buenas! Quiero consultar sobre el plan ${service.title}`);
+            const isUltra = service.id === "premium";
+
+            const whatsappMessage = encodeURIComponent(
+              `Buenas! Quiero consultar sobre el plan ${service.title}`,
+            );
             const whatsappUrl = `https://wa.me/5492216248756?text=${whatsappMessage}`;
-            
+
             return (
               <motion.div
                 key={service.id}
-                initial={{ opacity: 0, y: 50 }}
+                initial={{ opacity: 0, y: 40 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
-                animate={{ 
-                    y: 0,
-                    translateY: isRecommended || isUltra ? [0, -12, 0] : [0, -6, 0] // Floating effect
-                }}
-                transition={{ 
-                    delay: i * 0.1,
-                    translateY: {
-                        duration: isUltra ? 5 : 6,
-                        repeat: Infinity,
-                        ease: "easeInOut",
-                        delay: (i * 0.2) + 1
-                    }
-                }}
-                className={`glass-panel p-10 rounded-3xl flex flex-col items-center transition-all duration-500 relative ${
-                    isUltra
-                    ? 'platinum-pulse bg-white/5 z-20 scale-105'
-                    : isRecommended 
-                        ? 'neon-pulse scale-105 z-10 border-brand-blue' 
-                        : 'hover:border-brand-blue/30 hover:bg-white/5'
-                }`}
+                whileHover={{ y: -10 }}
+                transition={{ duration: 0.4, delay: i * 0.1 }}
+                className={`relative rounded-[2rem] border backdrop-blur-xl p-8 flex flex-col transition-all duration-300 ${style.base} ${style.hover} ${isRecommended ? "md:-mt-8 md:mb-8 scale-105 z-10" : "z-0"}`}
               >
-                {/* Background Effects Container */}
-                <div className="absolute inset-0 overflow-hidden rounded-3xl pointer-events-none">
-                     {/* Standard Plan Rotating Glow */}
-                     {isRecommended && (
-                      <div className="absolute inset-0 z-0">
-                        <motion.div 
-                          animate={{ rotate: 360 }}
-                          transition={{ duration: 8, repeat: Infinity, ease: "linear" }}
-                          className="absolute -top-[50%] -left-[50%] w-[200%] h-[200%] bg-[conic-gradient(from_0deg,transparent_0deg,rgba(0,123,255,0.1)_180deg,transparent_360deg)] opacity-50"
-                        />
-                      </div>
-                    )}
-
-                    {/* Ultra Premium Sheen & Static Glow (Non-rotating) */}
-                    {isUltra && (
-                       <div className="absolute inset-0 z-0">
-                          {/* Soft white center glow */}
-                          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-3/4 h-3/4 bg-white/5 blur-[60px] rounded-full"></div>
-                          
-                          {/* Moving Sheen Effect */}
-                          <motion.div 
-                            initial={{ x: '-150%', opacity: 0 }}
-                            animate={{ x: '150%', opacity: [0, 1, 1, 0] }}
-                            transition={{ duration: 3, repeat: Infinity, repeatDelay: 3, ease: "easeInOut" }}
-                            className="absolute inset-y-0 w-1/2 bg-gradient-to-r from-transparent via-white/10 to-transparent -skew-x-12 blur-md"
-                          />
-                       </div>
-                    )}
-                </div>
+                {/* Glow behind card */}
+                <div
+                  className={`absolute top-0 left-0 w-full h-full bg-gradient-to-b ${style.glow} opacity-50 rounded-[2rem] pointer-events-none`}
+                ></div>
 
                 {isRecommended && (
-                  <div className="absolute -top-4 bg-brand-blue text-white text-[10px] px-4 py-1 rounded-full font-black uppercase tracking-widest shadow-lg shadow-brand-blue/50 z-20">
-                    MÁS POPULAR
+                  <div className="absolute -top-4 left-1/2 -translate-x-1/2 flex items-center gap-1 px-4 py-1.5 rounded-full text-[10px] font-black uppercase tracking-widest z-20 whitespace-nowrap shadow-[0_0_20px_rgba(0,123,255,0.4)] animate-bounce border border-brand-blue/50 bg-brand-blue text-white">
+                    <Zap size={12} className="fill-white" /> MÁS POPULAR
                   </div>
                 )}
-                
+
                 {isUltra && (
-                  <div className="absolute -top-4 bg-white text-black text-[10px] px-4 py-1 rounded-full font-black uppercase tracking-widest shadow-[0_0_20px_rgba(255,255,255,0.8)] z-20 flex items-center gap-1">
-                    <span className="animate-pulse">★</span> EXCLUSIVO
+                  <div
+                    className={`absolute -top-4 left-1/2 -translate-x-1/2 flex items-center gap-1 px-4 py-1.5 rounded-full text-[10px] font-black uppercase tracking-widest z-20 whitespace-nowrap ${style.badge}`}
+                  >
+                    EXCLUSIVO
                   </div>
                 )}
-                
-                <div className="relative z-10 flex flex-col items-center w-full h-full">
-                    <Icon className={`w-12 h-12 mb-6 ${
-                        isUltra 
-                        ? 'text-white drop-shadow-[0_0_15px_rgba(255,255,255,0.8)]' 
-                        : isRecommended 
-                            ? 'text-brand-blue drop-shadow-[0_0_15px_rgba(0,123,255,0.6)]' 
-                            : 'text-slate-400 group-hover:text-brand-blue'
-                    }`} />
-                    
-                    <h3 className={`text-2xl font-display font-bold mb-2 ${isUltra ? 'text-white drop-shadow-[0_0_15px_rgba(255,255,255,0.6)]' : 'text-white'}`}>{service.title}</h3>
-                    <p className="text-slate-400 mb-6 text-sm h-10">{service.subtitle}</p>
-                    
-                    <div className={`text-4xl font-bold mb-8 font-display ${isUltra ? 'text-white drop-shadow-[0_0_20px_rgba(255,255,255,0.8)]' : 'text-white'}`}>
-                      <span>{service.price}</span>
-                      <span className="text-sm text-slate-500 font-normal font-body">{service.priceUnit}</span>
+
+                <div className="relative z-10 flex flex-col h-full">
+                  <div className="mb-8">
+                    <div
+                      className={`w-14 h-14 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center mb-6 shadow-xl`}
+                    >
+                      <Icon
+                        strokeWidth={1.5}
+                        className={`w-7 h-7 ${style.icon}`}
+                      />
                     </div>
-                    
-                    <ul className="text-slate-300 text-sm space-y-4 mb-10 text-left w-full flex-grow">
-                      {service.features.map((feature, idx) => (
-                        <li key={idx} className="flex items-center gap-3 group/item">
-                          <CheckCircle2 size={16} className={`flex-shrink-0 transition-colors ${
-                              isUltra 
-                              ? 'text-white drop-shadow-[0_0_10px_rgba(255,255,255,0.6)]' 
-                              : isRecommended 
-                                ? 'text-brand-blue drop-shadow-[0_0_5px_rgba(0,123,255,0.5)]' 
-                                : 'text-brand-blue group-hover/item:text-blue-400'
-                            }`} />
-                          <span className={`${feature.includes('DT.Bilardo') ? "font-bold text-base " + (isUltra ? "text-blue-500 drop-shadow-[0_0_15px_rgba(59,130,246,0.8)]" : "text-brand-blue drop-shadow-[0_0_8px_rgba(0,123,255,0.8)]") : ""} group-hover/item:text-white transition-colors`}>
-                            {feature}
-                          </span>
-                        </li>
-                      ))}
-                    </ul>
-                    
-                    <a 
-                      href={whatsappUrl}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className={`block w-full py-3 rounded-xl font-bold transition-all text-center ${
-                        isUltra
-                        ? 'bg-white hover:bg-slate-200 text-black shadow-[0_0_30px_rgba(255,255,255,0.6)] hover:shadow-[0_0_50px_rgba(255,255,255,0.9)]'
-                        : isRecommended
-                            ? 'bg-brand-blue hover:bg-blue-600 text-white shadow-[0_0_30px_rgba(0,123,255,0.5)] hover:shadow-[0_0_50px_rgba(0,123,255,0.8)]' 
-                            : 'border border-white/10 hover:bg-white/10 text-white hover:shadow-[0_0_20px_rgba(255,255,255,0.2)]'
-                    }`}>
-                      {service.ctaText}
-                    </a>
+
+                    <h3 className="text-2xl font-display font-black text-white tracking-widest mb-1">
+                      {service.title}
+                    </h3>
+                    <p className="text-slate-400 text-sm h-10">
+                      {service.subtitle}
+                    </p>
+                  </div>
+
+                  <div className="mb-8 border-b border-white/10 pb-8">
+                    <div className="flex items-baseline gap-1">
+                      <span className="text-4xl font-black text-white font-display tracking-tighter">
+                        {service.price}
+                      </span>
+                    </div>
+                    <span className="text-sm font-medium text-slate-500 tracking-widest uppercase">
+                      {service.priceUnit}
+                    </span>
+                  </div>
+
+                  <ul className="space-y-4 mb-10 flex-grow">
+                    {service.features.map((feature, idx) => (
+                      <li key={idx} className="flex items-start gap-3 group">
+                        <div
+                          className={`mt-0.5 rounded-full p-1 bg-white/5 border border-white/10 transition-colors`}
+                        >
+                          <Check
+                            size={12}
+                            className={style.icon}
+                            strokeWidth={3}
+                          />
+                        </div>
+                        <span
+                          className={`text-sm tracking-wide leading-tight ${style.text}`}
+                        >
+                          {feature}
+                        </span>
+                      </li>
+                    ))}
+                  </ul>
+
+                  <a
+                    href={whatsappUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className={`mt-auto w-full py-4 rounded-xl font-bold tracking-widest uppercase transition-all duration-300 text-center flex items-center justify-center gap-2 group ${style.button}`}
+                  >
+                    {service.ctaText}
+                    <ArrowRight
+                      size={16}
+                      className="group-hover:translate-x-1 transition-transform"
+                    />
+                  </a>
                 </div>
               </motion.div>
             );
           })}
         </div>
 
-        {/* Deluxe Plan */}
-        {deluxeService && (() => {
-            const Icon = icons[deluxeService.icon];
-            const whatsappMessage = encodeURIComponent(`Buenas! Quiero consultar sobre el plan ${deluxeService.title}`);
+        {/* Deluxe Plan (Horizontal layout) */}
+        {deluxeService &&
+          (() => {
+            const Icon = icons[deluxeService.icon as keyof typeof icons];
+            const whatsappMessage = encodeURIComponent(
+              `Buenas! Quiero consultar sobre el plan ${deluxeService.title}`,
+            );
             const whatsappUrl = `https://wa.me/5492216248756?text=${whatsappMessage}`;
 
             return (
-                <motion.div
-                    initial={{ opacity: 0, scale: 0.95 }}
-                    whileInView={{ opacity: 1, scale: 1 }}
-                    viewport={{ once: true }}
-                    className="max-w-5xl mx-auto relative group"
-                >
-                    {/* Ambient Background Glow */}
-                    <div className="absolute -inset-1 bg-gradient-to-r from-yellow-600 via-yellow-300 to-yellow-600 rounded-[2.5rem] blur opacity-25 group-hover:opacity-50 transition duration-1000 group-hover:duration-200 animate-tilt"></div>
-                    
-                    <div className="relative bg-[#050505] ring-1 ring-white/10 rounded-[2rem] overflow-hidden">
-                        
-                        {/* Top Spotlight */}
-                        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-lg h-32 bg-yellow-500/10 blur-[80px] rounded-full pointer-events-none"></div>
+              <motion.div
+                initial={{ opacity: 0, y: 40 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                className="max-w-5xl mx-auto mt-16 relative group"
+              >
+                {/* Golden Glow Backdrop */}
+                <div className="absolute -inset-1 bg-gradient-to-r from-[#FFD700]/30 via-[#FACC15]/30 to-[#FFD700]/30 rounded-[2.5rem] blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none"></div>
 
-                        <div className="flex flex-col md:flex-row">
-                            
-                            {/* Left Panel: Identity & Price */}
-                            <div className="w-full md:w-2/5 p-6 md:p-12 flex flex-col items-center justify-center text-center border-b md:border-b-0 md:border-r border-white/5 bg-white/[0.02] relative">
-                                {/* Animated Crown */}
-                                <div className="relative mb-6">
-                                    <div className="absolute inset-0 bg-yellow-500 blur-[30px] opacity-20 animate-pulse"></div>
-                                    <Icon className="w-16 h-16 text-yellow-400 relative z-10 drop-shadow-[0_0_15px_rgba(250,204,21,0.5)]" />
-                                </div>
+                <div className="relative border border-[#FACC15]/30 bg-gradient-to-b from-[#1a1500] to-[#0A0800] rounded-[2.5rem] overflow-hidden backdrop-blur-md shadow-2xl">
+                  <div className="flex flex-col md:flex-row">
+                    <div className="w-full md:w-5/12 p-10 flex flex-col justify-center border-b md:border-b-0 md:border-r border-[#FACC15]/20 bg-[url('https://www.transparenttextures.com/patterns/dark-matter.png')] relative">
+                      {/* Golden ray */}
+                      <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-br from-[#FACC15]/10 to-transparent pointer-events-none"></div>
 
-                                <h3 className="text-3xl md:text-4xl font-display font-bold text-white mb-2 tracking-tight">{deluxeService.title}</h3>
-                                <p className="text-yellow-500/80 font-medium uppercase tracking-widest text-xs mb-8">{deluxeService.subtitle}</p>
-
-                                <div className="mb-8">
-                                    <span className="text-4xl md:text-5xl font-display font-bold text-white block">{deluxeService.price}</span>
-                                    <span className="text-slate-500 text-sm">{deluxeService.priceUnit}</span>
-                                </div>
-
-                                <a 
-                                    href={whatsappUrl}
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                    className="w-full py-4 px-8 rounded-xl font-bold bg-yellow-500 hover:bg-yellow-400 text-black transition-all shadow-[0_0_20px_rgba(234,179,8,0.3)] hover:shadow-[0_0_30px_rgba(234,179,8,0.5)] uppercase tracking-wider flex items-center justify-center gap-2 group/btn"
-                                >
-                                    {deluxeService.ctaText}
-                                    <span className="group-hover/btn:translate-x-1 transition-transform">→</span>
-                                </a>
+                      <div className="relative z-10">
+                        <div className="flex items-center gap-4 mb-6">
+                          <div className="w-16 h-16 rounded-2xl bg-[#FACC15]/10 flex items-center justify-center border border-[#FACC15]/30 shadow-[0_0_30px_rgba(250,204,21,0.2)]">
+                            <Icon className="w-8 h-8 text-[#FACC15]" />
+                          </div>
+                          <div>
+                            <h3 className="text-3xl font-display font-black text-white tracking-widest">
+                              {deluxeService.title}
+                            </h3>
+                            <div className="text-[#FACC15] text-xs font-bold tracking-[0.2em] uppercase">
+                              {deluxeService.subtitle}
                             </div>
-
-                            {/* Right Panel: The Experience */}
-                            <div className="w-full md:w-3/5 p-6 md:p-12 bg-gradient-to-br from-transparent to-white/[0.02]">
-                                <h4 className="text-lg md:text-xl font-display font-bold text-white mb-6 flex items-center gap-3">
-                                    <span className="w-8 h-[1px] bg-yellow-500"></span>
-                                    LA EXPERIENCIA COMPLETA
-                                </h4>
-                                
-                                <p className="text-slate-400 mb-8 leading-relaxed text-sm md:text-base">
-                                    No es solo una grabación, es el inicio de tu carrera profesional. 
-                                    Accedé a un equipo de trabajo dedicado exclusivamente a tu visión artística.
-                                </p>
-
-                                <div className="grid grid-cols-1 gap-4">
-                                    {deluxeService.features.map((feature, idx) => (
-                                        <div key={idx} className="flex items-start gap-4 group/item">
-                                            <div className={`mt-1 w-5 h-5 rounded-full flex items-center justify-center shrink-0 ${
-                                                feature.includes('DT.Bilardo') 
-                                                ? 'bg-blue-500 text-black shadow-[0_0_10px_rgba(59,130,246,0.5)]' 
-                                                : 'bg-yellow-500/20 text-yellow-500'
-                                            }`}>
-                                                <CheckCircle2 size={12} strokeWidth={4} />
-                                            </div>
-                                            <div>
-                                                <span className={`text-sm md:text-base transition-colors ${
-                                                    feature.includes('DT.Bilardo') 
-                                                    ? 'text-white font-bold drop-shadow-[0_0_5px_rgba(59,130,246,0.8)]' 
-                                                    : 'text-slate-300 group-hover/item:text-white'
-                                                }`}>
-                                                    {feature}
-                                                </span>
-                                            </div>
-                                        </div>
-                                    ))}
-                                </div>
-                            </div>
+                          </div>
                         </div>
-                    </div>
-                </motion.div>
-            );
-        })()}
 
+                        <div className="mb-8">
+                          <span className="text-5xl font-display font-black text-white tracking-tighter">
+                            {deluxeService.price}
+                          </span>
+                          <span className="text-slate-500 text-sm font-medium tracking-widest uppercase block mt-1">
+                            {deluxeService.priceUnit}
+                          </span>
+                        </div>
+
+                        <a
+                          href={whatsappUrl}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="w-full py-4 rounded-xl font-bold bg-gradient-to-r from-[#FACC15] to-[#EAB308] text-black hover:opacity-90 transition-all uppercase tracking-widest flex items-center justify-center gap-2 group/btn shadow-[0_0_30px_rgba(250,204,21,0.4)]"
+                        >
+                          {deluxeService.ctaText}
+                          <ArrowRight
+                            size={18}
+                            className="group-hover/btn:translate-x-1 transition-transform"
+                          />
+                        </a>
+                      </div>
+                    </div>
+
+                    <div className="w-full md:w-7/12 p-10 relative">
+                      {/* Decorative elements */}
+                      <div className="absolute right-10 top-10 w-32 h-32 bg-[#FACC15]/5 rounded-full blur-2xl pointer-events-none"></div>
+
+                      <h4 className="text-sm font-black text-[#FACC15] tracking-[0.2em] mb-8 flex items-center gap-4 uppercase">
+                        <span className="h-[1px] flex-grow bg-[#FACC15]/30"></span>
+                        La Experiencia Completa
+                        <span className="h-[1px] flex-grow bg-[#FACC15]/30"></span>
+                      </h4>
+
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-6">
+                        {deluxeService.features.map((feature, idx) => (
+                          <div key={idx} className="flex items-start gap-4">
+                            <div className="mt-1 shrink-0 w-6 h-6 rounded-full bg-[#FACC15]/10 border border-[#FACC15]/30 flex items-center justify-center shadow-[0_0_10px_rgba(250,204,21,0.2)]">
+                              <Check
+                                size={12}
+                                strokeWidth={3}
+                                className="text-[#FACC15]"
+                              />
+                            </div>
+                            <span
+                              className={`text-sm leading-snug font-medium tracking-wide ${
+                                feature.includes("DT.Bilardo")
+                                  ? "text-white font-bold drop-shadow-[0_0_8px_rgba(255,255,255,0.5)]"
+                                  : "text-slate-300"
+                              }`}
+                            >
+                              {feature}
+                            </span>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </motion.div>
+            );
+          })()}
       </div>
     </section>
   );
