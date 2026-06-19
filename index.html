@@ -118,18 +118,32 @@
         to { background-position: 100px 100px; }
       }
     </style>
+  <script>
+    window.addEventListener('error', function(event) {
+      const errorDiv = document.createElement('div');
+      errorDiv.style.cssText = 'position: fixed; top: 0; left: 0; right: 0; background: red; color: white; z-index: 99999; padding: 20px; font-family: monospace; word-break: break-all;';
+      errorDiv.innerText = 'Error: ' + event.message + '\n' + (event.error ? event.error.stack : '');
+      document.body.appendChild(errorDiv);
+    });
+    window.addEventListener('unhandledrejection', function(event) {
+      const errorDiv = document.createElement('div');
+      errorDiv.style.cssText = 'position: fixed; top: 0; left: 0; right: 0; background: orange; color: white; z-index: 99999; padding: 20px; font-family: monospace; word-break: break-all;';
+      errorDiv.innerText = 'Promise Error: ' + event.reason;
+      document.body.appendChild(errorDiv);
+    });
+  </script>
   <script type="importmap">
-{
-  "imports": {
-    "react/": "https://esm.sh/react@^19.2.4/",
-    "react": "https://esm.sh/react@^19.2.4",
-    "react-dom/": "https://esm.sh/react-dom@^19.2.4/",
-    "lucide-react": "https://esm.sh/lucide-react@^0.563.0",
-    "framer-motion": "https://esm.sh/framer-motion@^12.31.0"
+  {
+    "imports": {
+      "react/": "https://esm.sh/react@^19.2.4/",
+      "react": "https://esm.sh/react@^19.2.4",
+      "react-dom/": "https://esm.sh/react-dom@^19.2.4/",
+      "react-router-dom": "https://esm.sh/react-router-dom@^6.22.3",
+      "lucide-react": "https://esm.sh/lucide-react@^0.563.0",
+      "framer-motion": "https://esm.sh/framer-motion@^12.31.0"
+    }
   }
-}
-</script>
-<link rel="stylesheet" href="/index.css">
+  </script>
 </head>
   <body>
     <div id="root"></div>
