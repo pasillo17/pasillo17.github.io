@@ -42,8 +42,7 @@ const cardStyles = {
   },
   premium: {
     base: "border-cyan-500/50 bg-slate-900/50",
-    hover:
-      "hover:border-cyan-500 hover:shadow-[0_0_40px_rgba(34,211,238,0.2)]",
+    hover: "hover:border-cyan-500 hover:shadow-[0_0_40px_rgba(34,211,238,0.2)]",
     icon: "text-cyan-400",
     button:
       "bg-cyan-600 text-white hover:bg-cyan-500 shadow-[0_0_20px_rgba(34,211,238,0.3)]",
