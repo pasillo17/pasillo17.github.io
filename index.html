@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Pasillo17 | Estudio de Grabación</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              brand: {
+                blue: '#007BFF',
+                dark: '#020617',
+                slate: '#0f172a',
+                accent: '#3b82f6',
+              }
+            },
+            fontFamily: {
+              display: ['Rajdhani', 'sans-serif'],
+              body: ['Inter', 'sans-serif'],
+            },
+            backgroundImage: {
+              'radial-glow': 'radial-gradient(circle at center, var(--tw-gradient-stops))',
+            },
+            animation: {
+               'spin-slow': 'spin 8s linear infinite',
+            }
+          }
+        }
+      }
+    </script>
+    <style>
+      body {
+        background-color: #020617;
+        color: white;
+      }
+      
+      /* Custom Glow Effects */
+      .text-glow {
+        text-shadow: 0 0 20px rgba(0, 123, 255, 0.6);
+      }
+      
+      .neon-border {
+        box-shadow: 0 0 10px rgba(0, 123, 255, 0.3), inset 0 0 10px rgba(0, 123, 255, 0.1);
+      }
+      
+      /* New Pulsing Animation for Standard Plan */
+      @keyframes neon-pulse {
+        0% {
+          box-shadow: 0 0 15px rgba(0, 123, 255, 0.3), inset 0 0 10px rgba(0, 123, 255, 0.1);
+          border-color: rgba(0, 123, 255, 0.4);
+        }
+        50% {
+          box-shadow: 0 0 35px rgba(0, 123, 255, 0.6), inset 0 0 20px rgba(0, 123, 255, 0.2);
+          border-color: rgba(0, 123, 255, 1);
+        }
+        100% {
+          box-shadow: 0 0 15px rgba(0, 123, 255, 0.3), inset 0 0 10px rgba(0, 123, 255, 0.1);
+          border-color: rgba(0, 123, 255, 0.4);
+        }
+      }
+
+      .neon-pulse {
+        animation: neon-pulse 3s infinite ease-in-out;
+      }
+      
+      /* New Platinum Pulse for Ultra Premium */
+      @keyframes platinum-pulse {
+        0% {
+          box-shadow: 0 0 15px rgba(255, 255, 255, 0.1), inset 0 0 5px rgba(255, 255, 255, 0.05);
+          border-color: rgba(255, 255, 255, 0.3);
+        }
+        50% {
+          box-shadow: 0 0 35px rgba(255, 255, 255, 0.3), inset 0 0 15px rgba(255, 255, 255, 0.1);
+          border-color: rgba(255, 255, 255, 0.8);
+        }
+        100% {
+          box-shadow: 0 0 15px rgba(255, 255, 255, 0.1), inset 0 0 5px rgba(255, 255, 255, 0.05);
+          border-color: rgba(255, 255, 255, 0.3);
+        }
+      }
+
+      .platinum-pulse {
+        animation: platinum-pulse 4s infinite ease-in-out;
+      }
+
+      /* Sheen Effect for Portfolio Cards */
+      @keyframes sheen {
+        0% { transform: translateX(-150%) skewX(-12deg); }
+        100% { transform: translateX(150%) skewX(-12deg); }
+      }
+      
+      .glass-panel {
+        background: rgba(15, 23, 42, 0.6);
+        backdrop-filter: blur(12px);
+        border: 1px solid rgba(255, 255, 255, 0.05);
+      }
+
+      /* Instagram Gradient Border */
+      .insta-gradient {
+        background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
+      }
+
+      /* Star/Dust Background Animation */
+      .stars {
+        background-image: url("https://www.transparenttextures.com/patterns/stardust.png");
+        opacity: 0.3;
+        animation: twinkle 20s infinite linear;
+      }
+      
+      @keyframes twinkle {
+        from { background-position: 0 0; }
+        to { background-position: 100px 100px; }
+      }
+    </style>
+  <script type="importmap">
+{
+  "imports": {
+    "react/": "https://esm.sh/react@^19.2.4/",
+    "react": "https://esm.sh/react@^19.2.4",
+    "react-dom/": "https://esm.sh/react-dom@^19.2.4/",
+    "lucide-react": "https://esm.sh/lucide-react@^0.563.0",
+    "framer-motion": "https://esm.sh/framer-motion@^12.31.0"
+  }
+}
+</script>
+<link rel="stylesheet" href="/index.css">
+</head>
+  <body>
+    <div id="root"></div>
+  <script type="module" src="/index.tsx"></script>
+</body>
+</html>
