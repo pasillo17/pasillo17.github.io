@@ -174,11 +174,11 @@ export const SERVICES: Service[] = [
     id: 'premium',
     title: 'PREMIUM',
     subtitle: 'Para resultados de otro planeta',
-    price: '$300.000',
+    price: '$210.000',
     priceUnit: '/track',
     ctaText: 'RESERVAR',
     icon: 'disc',
-    features: ['6 Horas de Grabación', 'Beat Exclusivo', 'Mezcla Creativa', 'Video Sesion en el Estudio', 'Sesión de Fotos', 'Plan Básico de Lanzamiento'],
+    features: ['6 Horas de Grabación', 'Beat Exclusivo', 'Mezcla Creativa', 'Video Sesión Visualizer en el Estudio (multiplataforma, reel y vertical)', 'Sesión de Fotos', 'Plan Básico de Lanzamiento'],
   },
   {
     id: 'deluxe',
