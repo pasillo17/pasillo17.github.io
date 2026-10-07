@@ -1,6 +1,7 @@
 import React from "react";
 import { motion } from "framer-motion";
 import { MessageCircle, Instagram, Youtube } from "lucide-react";
+import { useNavigate, useLocation } from "react-router-dom";
 
 // Icono de TikTok personalizado (SVG)
 const TikTokIcon = ({
@@ -26,6 +27,31 @@ const TikTokIcon = ({
 );
 
 const Footer: React.FC = () => {
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  const handleFooterAnchor = (e: React.MouseEvent, href: string) => {
+    e.preventDefault();
+    if (href === "#" || href === "") {
+      if (location.pathname !== "/") {
+        navigate("/");
+        setTimeout(() => window.scrollTo({ top: 0, behavior: "smooth" }), 150);
+      } else {
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      }
+      return;
+    }
+    const id = href.replace("#", "");
+    if (location.pathname !== "/") {
+      navigate("/");
+      setTimeout(() => {
+        document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
+      }, 150);
+    } else {
+      document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
+    }
+  };
+
   return (
     <footer
       id="contact"
@@ -82,13 +108,18 @@ const Footer: React.FC = () => {
             </h5>
             <ul className="text-slate-500 text-sm space-y-3">
               <li>
-                <a href="#" className="hover:text-brand-blue transition-colors">
+                <a
+                  href="#"
+                  onClick={(e) => handleFooterAnchor(e, "#")}
+                  className="hover:text-brand-blue transition-colors"
+                >
                   Inicio
                 </a>
               </li>
               <li>
                 <a
                   href="#about"
+                  onClick={(e) => handleFooterAnchor(e, "#about")}
                   className="hover:text-brand-blue transition-colors"
                 >
                   Sobre el estudio
@@ -97,6 +128,7 @@ const Footer: React.FC = () => {
               <li>
                 <a
                   href="#portfolio"
+                  onClick={(e) => handleFooterAnchor(e, "#portfolio")}
                   className="hover:text-brand-blue transition-colors"
                 >
                   Portafolio
@@ -105,6 +137,7 @@ const Footer: React.FC = () => {
               <li>
                 <a
                   href="#pricing"
+                  onClick={(e) => handleFooterAnchor(e, "#pricing")}
                   className="hover:text-brand-blue transition-colors"
                 >
                   Servicios

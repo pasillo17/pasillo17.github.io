@@ -1,17 +1,34 @@
 import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X } from "lucide-react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 
 const Navbar: React.FC = () => {
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
+  const navigate = useNavigate();
+  const location = useLocation();
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 50);
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
+
+  const handleAnchorClick = (e: React.MouseEvent, href: string) => {
+    if (href.startsWith("#")) {
+      e.preventDefault();
+      const id = href.replace("#", "");
+      if (location.pathname !== "/") {
+        navigate("/");
+        setTimeout(() => {
+          document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
+        }, 150);
+      } else {
+        document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
+      }
+    }
+  };
 
   const navLinks = [
     { name: "Sobre mí", href: "#about", type: "anchor" },
@@ -32,7 +49,16 @@ const Navbar: React.FC = () => {
       }`}
     >
       <div className="max-w-7xl mx-auto px-6 flex justify-between items-center">
-        <div className="flex items-center gap-1 group cursor-pointer">
+        <div
+          onClick={() => {
+            if (location.pathname !== "/") {
+              navigate("/");
+            } else {
+              window.scrollTo({ top: 0, behavior: "smooth" });
+            }
+          }}
+          className="flex items-center gap-1 group cursor-pointer"
+        >
           {/* LOGO: Reemplaza el src con la URL de tu logo real */}
           <img
             src="https://i.imgur.com/6s2UIvX.png"
@@ -57,6 +83,7 @@ const Navbar: React.FC = () => {
               <a
                 key={link.name}
                 href={link.href}
+                onClick={(e) => handleAnchorClick(e, link.href)}
                 className="relative hover:text-brand-blue transition-colors group"
               >
                 {link.name}
@@ -66,6 +93,7 @@ const Navbar: React.FC = () => {
           )}
           <a
             href="#pricing"
+            onClick={(e) => handleAnchorClick(e, "#pricing")}
             className="bg-brand-blue hover:bg-blue-600 px-6 py-2 rounded-full text-sm font-bold transition-all shadow-[0_0_20px_rgba(0,123,255,0.4)] hover:shadow-[0_0_35px_rgba(0,123,255,0.7)] hover:scale-105"
           >
             RESERVAR AHORA
@@ -105,7 +133,10 @@ const Navbar: React.FC = () => {
                   <a
                     key={link.name}
                     href={link.href}
-                    onClick={() => setMobileOpen(false)}
+                    onClick={(e) => {
+                      setMobileOpen(false);
+                      handleAnchorClick(e, link.href);
+                    }}
                     className="text-sm font-medium uppercase tracking-widest hover:text-brand-blue"
                   >
                     {link.name}
@@ -114,7 +145,10 @@ const Navbar: React.FC = () => {
               )}
               <a
                 href="#pricing"
-                onClick={() => setMobileOpen(false)}
+                onClick={(e) => {
+                  setMobileOpen(false);
+                  handleAnchorClick(e, "#pricing");
+                }}
                 className="bg-brand-blue w-full py-3 rounded-full text-sm font-bold shadow-[0_0_20px_rgba(0,123,255,0.4)]"
               >
                 RESERVAR AHORA

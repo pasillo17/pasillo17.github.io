@@ -1,5 +1,5 @@
 import React from "react";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { HashRouter as Router, Routes, Route } from "react-router-dom";
 import Navbar from "./components/Navbar";
 import Hero from "./components/Hero";
 import About from "./components/About";
@@ -32,6 +32,8 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/trabajos" element={<PlaylistPage />} />
           <Route path="/cursos" element={<CoursesPage />} />
+          {/* Fallback to Home so any subpath or anchor hash always renders Home instead of blank screen */}
+          <Route path="*" element={<Home />} />
         </Routes>
       </div>
     </Router>
